@@ -10,6 +10,11 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/contact', async (req, res) => {
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
   const { name, email, message } = req.body;
 
   if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS) {
