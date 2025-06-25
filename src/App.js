@@ -91,9 +91,14 @@ function App() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setFormStatus('');
+    setFormStatus('loading');
     try {
-      const res = await fetch('http://localhost:5000/contact', {
+      // Use relative URL for Vercel deployment, or localhost for development
+      const apiUrl = process.env.NODE_ENV === 'production' 
+        ? '/api/contact' 
+        : 'http://localhost:5000/contact';
+      
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -105,7 +110,8 @@ function App() {
       } else {
         setFormStatus('error');
       }
-    } catch {
+    } catch (error) {
+      console.error('Error:', error);
       setFormStatus('error');
     }
   };

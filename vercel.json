@@ -1,5 +1,10 @@
 {
   "rewrites": [
     { "source": "/contact", "destination": "/api/contact.js" }
-  ]
+  ],
+  "functions": {
+    "api/contact.js": {
+      "maxDuration": 10
+    }
+  }
 } 
